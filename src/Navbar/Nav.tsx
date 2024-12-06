@@ -14,7 +14,7 @@ const Navs = () => {
                 <div className="d-flex justify-content-between">
                     <NavLink to="/" className="link">
                         <div className="logo">
-                            <img src="/assets/logo-1.png" className="img-fluid" alt="logo" />
+                            <img src="/assets/logo.png" className="img-fluid" alt="logo" />
                         </div>
                     </NavLink>
 

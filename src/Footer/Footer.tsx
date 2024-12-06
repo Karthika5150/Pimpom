@@ -11,7 +11,7 @@ export default function Footer() {
                         <div className='col-lg-3 col-md-6 col-sm-12 col-xs-12'>
                             <Link to="/" className='link'>
                                 <div className='logo-f'>
-                                    <img src='/assets/logo-1.png' className='img-fluid' alt='img' />
+                                    <img src='/assets/logo.png' className='img-fluid' alt='img' />
                                 </div>
                             </Link>
                         </div>
