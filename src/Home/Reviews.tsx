@@ -1,78 +1,70 @@
-import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
-
-const testimonials = [
-  {
-    id: 1,
-    name: "Alice Johnson",
-    feedback: "We’d love to hear how this recipe turned out for you!",
-  },
-  {
-    id: 2,
-    name: "Michael Brown",
-    feedback: "Provide discounts or feature user-submitted recipes as a thank-you for feedback!",
-  },
-  {
-    id: 3,
-    name: "Sophia Lee",
-    feedback: "Highlight reviews and photos on your website to motivate others to contribute!",
-  },
-];
-
-const Testimonial = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-  // Autoplay: Change the slide every 5 seconds
+import React, { useState, useEffect } from 'react';
+import { Container } from 'react-bootstrap';
+import { Flex, Rate } from 'antd';
 
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSelectedIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-    }, 2500);
+const Reviews = () => {
+    // Define the array of content to display
+    const reviews = [
+        { title: 'Sindhu', content: 'It conditioned my hair well, gives shine and reduced my hair fall.Love this paati hair oil.' },
+        { title: 'Maha', content: 'I recommend everyone to try paati hair oil and neem comb. It is very natural and effective. I had a hair fall problem before, but now my hair fall completely stopped and I got many baby hairs. I love patty hair oil.' },
+        { title: 'Priya Gopi', content: 'Pimpom & Paati thank you so much, after using the oil my curly hair changed straight & soft.' },
+    ];
 
-    return () => clearInterval(interval); // Clear interval on component unmount
-  }, []);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleSlideChange = (index: number) => {
-    setSelectedIndex(index);
-  };
+    // Function to go to next review
+    const nextReview = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % reviews.length);
+    };
 
-  return (
-    <section>
-      <Container>
-        <div>
-          <h2 className="head-txt">Why They Choose Us</h2>
-          <div className="testimonial-container">
-            <div className="testimonial-slides">
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={testimonial.id}
-                  className={`testimonial-slide ${index === selectedIndex ? "active" : ""
-                    }`}
-                >
-                  <p className="testimonial-feedback">{testimonial.feedback}</p>
-                  <h3 className="testimonial-name">{testimonial.name}</h3>
+    // Function to go to previous review
+    const prevReview = () => {
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + reviews.length) % reviews.length);
+    };
+
+    // Automatic transition every 2 seconds
+    useEffect(() => {
+        const interval = setInterval(() => {
+            nextReview();  // Change review automatically
+        }, 2000);
+
+        // Clean up interval on component unmount
+        return () => clearInterval(interval);
+    }, []);
+
+    const [value, setValue] = useState(5);
+
+    return (
+        <section className="review-contain">
+            <Container>
+                <div>
+                    <h2 className='head-txt'>Customer Reviews</h2>
+                    <div className="reviews">
+                        <div className='icons-div'>
+                            <div className='btn-l' onClick={prevReview}>
+                                <i className="fi fi-rr-less-than less"></i>
+                            </div>
+                        </div>
+                        <div className='review-content'>
+                            <p className='review-s'>{reviews[currentIndex].content}</p>
+                            <div className='rating'>
+                                <Flex gap="middle" vertical>
+                                    <Rate onChange={setValue} value={value} />
+                                </Flex>
+                            </div>
+                            <h2 className='review-h'>{reviews[currentIndex].title}</h2>
+                        </div>
+                        <div className='icons-div'>
+                            <div className='btn-g' onClick={nextReview}>
+                                <i className="fi fi-rr-greater-than less"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              ))}
-            </div>
-
-            {/* Radio buttons */}
-            <div className="testimonial-controls">
-              {testimonials.map((_, index) => (
-                <input
-                  key={index}
-                  type="radio"
-                  name="testimonial-slider"
-                  checked={selectedIndex === index}
-                  onChange={() => handleSlideChange(index)}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </Container>
-    </section>
-  );
+            </Container>
+        </section>
+    );
 };
 
-export default Testimonial;
+export default Reviews;
